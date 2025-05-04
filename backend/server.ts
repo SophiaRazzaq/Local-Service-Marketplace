@@ -6,6 +6,11 @@ import bodyParser from "body-parser";
 import morgan from "morgan";
 
 import authRouter from "./routes/auth";
+import serviceRouter from "./routes/services";
+import bookingRouter from "./routes/bookings";
+import reviewRouter from "./routes/reviews";
+import messageRouter from "./routes/messages";
+import paymentRouter from "./routes/payments";
 
 const app = express();
 
@@ -14,6 +19,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan("tiny"));
 
 app.use("/api/auth", authRouter);
+// app.use('/api/users', userRouter);
+app.use("/api/services", serviceRouter);
+app.use("/api/bookings", bookingRouter);
+app.use("/api/reviews", reviewRouter);
+app.use("/api/messages", messageRouter);
+app.use("/api/payments", paymentRouter);
 
 mongoose
 	.connect(config.mongoURI, {

@@ -1,7 +1,7 @@
 import type { Request, Response, NextFunction } from "express";
+import UserModel from "../models/User";
 import fastJwt from "fast-jwt";
 import config from "../infra/config";
-import UserModel from "../models/User";
 
 const verifier = fastJwt.createVerifier({ key: config.JWT_SECRET });
 
