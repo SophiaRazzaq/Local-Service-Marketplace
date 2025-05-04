@@ -5,11 +5,15 @@ import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import morgan from "morgan";
 
+import authRouter from "./routes/auth";
+
 const app = express();
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan("tiny"));
+
+app.use("/api/auth", authRouter);
 
 mongoose
 	.connect(config.mongoURI, {
@@ -17,9 +21,10 @@ mongoose
 	})
 	.then(() => {
 		console.log("MongoDB connected");
-	}).catch((err) => {
-    console.error("MongoDB connection error:", err);
-  }
+	})
+	.catch((err) => {
+		console.error("MongoDB connection error:", err);
+	});
 
 if (config.isProd) {
 	const frontendBuildPath = path.join(__dirname, "..", "frontend", "build");

@@ -17,3 +17,4 @@ backend/node_modules/
 frontend/build
 dist
 .env
+backend/test

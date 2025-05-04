@@ -24,6 +24,11 @@ export interface IUser extends mongoose.Document {
 	createdAt: Date;
 	updatedAt: Date;
 }
+export interface IUserMethods {
+	isValidPassword(plainText: string): Promise<boolean>;
+}
+
+export interface UserModel extends mongoose.Model<IUser, {}, IUserMethods> {}
 
 const UserSchema = new mongoose.Schema<IUser>(
 	{
@@ -77,6 +82,6 @@ UserSchema.methods.isValidPassword = async function (plainText: string) {
 	});
 };
 
-const UserModel = mongoose.model<IUser>("User", UserSchema);
+const UserModel = mongoose.model<IUser, UserModel>("User", UserSchema);
 
 export default UserModel;
