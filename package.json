@@ -1,21 +1,41 @@
 {
-  "name": "localservicemarketplace",
-  "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
-  "dependencies": {
-    "bcryptjs": "^3.0.2",
-    "cors": "^2.8.5",
-    "dotenv": "^16.4.7",
-    "express": "^4.21.2",
-    "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.12.1"
-  },
-  "packageManager": "pnpm@10.10.0+sha512.d615db246fe70f25dcfea6d8d73dee782ce23e2245e3c4f6f888249fb568149318637dca73c2c5c8ef2a4ca0d5657fb9567188bfab47f566d1ee6ce987815c39"
+	"name": "localservicemarketplace",
+	"version": "1.0.0",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"dev": "rspack b -w --nodeEnv development",
+		"build": "rspack b --nodeEnv production"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"description": "",
+	"dependencies": {
+		"@napi-rs/uuid": "^0.2.2",
+		"@node-rs/argon2": "^2.0.2",
+		"bcryptjs": "^3.0.2",
+		"body-parser": "^2.2.0",
+		"cors": "^2.8.5",
+		"dotenv": "^16.4.7",
+		"express": "^5.1.0",
+		"fast-jwt": "^6.0.1",
+		"jsonwebtoken": "^9.0.2",
+		"mongoose": "^8.12.1",
+		"morgan": "^1.10.0",
+		"stripe": "^18.1.0"
+	},
+	"packageManager": "pnpm@10.10.0+sha512.d615db246fe70f25dcfea6d8d73dee782ce23e2245e3c4f6f888249fb568149318637dca73c2c5c8ef2a4ca0d5657fb9567188bfab47f566d1ee6ce987815c39",
+	"devDependencies": {
+		"@biomejs/biome": "^1.9.4",
+		"@rspack/cli": "^1.3.8",
+		"@rspack/core": "^1.3.8",
+		"@tsconfig/node23": "^23.0.1",
+		"@types/body-parser": "^1.19.5",
+		"@types/express": "^5.0.1",
+		"@types/morgan": "^1.9.9",
+		"@types/node": "^22.15.3",
+		"typescript": "^5.8.3",
+		"webpack-node-externals": "^3.0.0"
+	}
 }

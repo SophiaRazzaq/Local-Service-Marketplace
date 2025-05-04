@@ -6,5 +6,8 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
 	plugins: [tsconfigPaths(), react(), tailwindcss()],
 	build: { outDir: "build" },
-	server: { open: true, port: 3000 },
+	server: {
+		open: true,
+		port: 3000,
+	},
 });
