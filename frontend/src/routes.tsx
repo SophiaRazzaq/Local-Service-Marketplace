@@ -13,9 +13,9 @@ const LazyLoad = (loader: () => Promise<{ default: React.ComponentType }>) => {
 };
 
 const HomePage = LazyLoad(() => import("./pages/HomePage"));
-const LoginPage = React.lazy(() => import("./pages/auth/Login"));
-const RegisterPage = React.lazy(() => import("./pages/auth/Register"));
-// const ServicesPage = React.lazy(() => import("./pages/ServicesPage"));
+const LoginPage = LazyLoad(() => import("./pages/auth/Login"));
+const RegisterPage = LazyLoad(() => import("./pages/auth/Register"));
+const ServicesPage = LazyLoad(() => import("./pages/ServicesListing"));
 // const ServiceDetailPage = React.lazy(() => import("./pages/ServiceDetailPage"));
 // const BookingsPage = React.lazy(() => import("./pages/BookingsPage"));
 // const MessagesPage = React.lazy(() => import("./pages/MessagesPage"));
@@ -41,8 +41,13 @@ const PrivateRoute: React.FC<{
 	return <>{children}</>;
 };
 
+const asPrivate = (component: () => React.ReactNode) => {
+	return () => <PrivateRoute>{component()}</PrivateRoute>;
+};
+
 export const router = createBrowserRouter([
 	{ path: "/", Component: HomePage },
 	{ path: "/auth/register", Component: RegisterPage },
 	{ path: "/auth/login", Component: LoginPage },
+	{ path: "/services", Component: asPrivate(ServicesPage) },
 ]);

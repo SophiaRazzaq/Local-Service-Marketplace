@@ -46,12 +46,15 @@ export const updateProfile = async (userData: Partial<User>) => {
 };
 
 // Service services
-export const getServices = async (params?: {
-	keyword?: string;
-	category?: string;
-	page?: number;
-}) => {
-	const response = await api.get("/services", { params });
+export const getServices = async (
+	params?: {
+		keyword?: string;
+		category?: string;
+		page?: number;
+	},
+	signal?: AbortSignal,
+) => {
+	const response = await api.get("/services", { params, signal });
 	return response.data;
 };
 

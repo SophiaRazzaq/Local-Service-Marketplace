@@ -1,7 +1,7 @@
 import type { FC, PropsWithChildren } from "react";
 import Navbar from "../Navbar";
 
-const AuthLayout: FC<PropsWithChildren> = ({ children }) => {
+const Layout: FC<PropsWithChildren> = ({ children }) => {
 	return (
 		<>
 			<Navbar />
@@ -10,4 +10,4 @@ const AuthLayout: FC<PropsWithChildren> = ({ children }) => {
 	);
 };
 
-export default AuthLayout;
+export default Layout;
