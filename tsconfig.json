@@ -1,0 +1,7 @@
+{
+	"extends": "@tsconfig/node23",
+	"compilerOptions": {
+		"isolatedModules": true
+	},
+	"include": ["backend", "rspack.config.ts"]
+}
