@@ -13,8 +13,8 @@ const LazyLoad = (loader: () => Promise<{ default: React.ComponentType }>) => {
 };
 
 const HomePage = LazyLoad(() => import("./pages/HomePage"));
-// const LoginPage = React.lazy(() => import("./pages/LoginPage"));
-// const RegisterPage = React.lazy(() => import("./pages/RegisterPage"));
+const LoginPage = React.lazy(() => import("./pages/auth/Login"));
+const RegisterPage = React.lazy(() => import("./pages/auth/Register"));
 // const ServicesPage = React.lazy(() => import("./pages/ServicesPage"));
 // const ServiceDetailPage = React.lazy(() => import("./pages/ServiceDetailPage"));
 // const BookingsPage = React.lazy(() => import("./pages/BookingsPage"));
@@ -31,7 +31,7 @@ const PrivateRoute: React.FC<{
 	const { user } = useAuth();
 
 	if (!user) {
-		return <Navigate to="/login" />;
+		return <Navigate to="/auth/login" />;
 	}
 
 	if (allowedRoles && !allowedRoles.includes(user.role)) {
@@ -41,6 +41,8 @@ const PrivateRoute: React.FC<{
 	return <>{children}</>;
 };
 
-const router = createBrowserRouter([{ path: "/", Component: HomePage }]);
-
-export default router;
+export const router = createBrowserRouter([
+	{ path: "/", Component: HomePage },
+	{ path: "/auth/register", Component: RegisterPage },
+	{ path: "/auth/login", Component: LoginPage },
+]);

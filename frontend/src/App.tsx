@@ -1,6 +1,6 @@
 import type React from "react";
 import { RouterProvider } from "react-router";
-import router from "./routes";
+import { router } from "./routes";
 import { AuthProvider } from "./contexts/AuthContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
