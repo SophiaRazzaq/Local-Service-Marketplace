@@ -85,13 +85,13 @@ const Navbar: React.FC = () => {
 						) : (
 							<div className="flex space-x-4">
 								<Link
-									to="/login"
+									to="/auth/login"
 									className="border-transparent text-gray-500 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
 								>
 									Login
 								</Link>
 								<Link
-									to="/register"
+									to="/auth/register"
 									className="border-transparent text-gray-500 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
 								>
 									Register
@@ -183,13 +183,13 @@ const Navbar: React.FC = () => {
 						) : (
 							<div className="space-y-1">
 								<Link
-									to="/login"
+									to="/auth/login"
 									className="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100"
 								>
 									Login
 								</Link>
 								<Link
-									to="/register"
+									to="/auth/register"
 									className="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100"
 								>
 									Register

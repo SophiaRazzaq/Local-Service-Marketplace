@@ -1,10 +1,37 @@
+import { useRef } from "react";
 import { Link } from "react-router";
+import { toast } from "react-toastify";
 
-const LoginForm = () => {
+interface LoginFormProps {
+	login: (email: string, password: string) => Promise<void>;
+	isLoggingIn: boolean;
+}
+
+const LoginForm = ({ login, isLoggingIn }: LoginFormProps) => {
+	const formRef = useRef<HTMLFormElement>(null);
+
+	const onSubmit = async (event: React.FormEvent) => {
+		event.preventDefault();
+		if (!formRef.current) return;
+
+		const values = new FormData(formRef.current);
+
+		const email = values.get("email") as string;
+		const password = values.get("password") as string;
+
+		if (!email || !password) {
+			// notify error toast
+			toast.error("Please fill in all fields");
+			return;
+		}
+
+		login(email, password);
+	};
+
 	return (
 		<div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
 			<div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-				<form action="#" method="POST" className="space-y-6">
+				<form action="#" method="POST" className="space-y-6" ref={formRef}>
 					<div>
 						<label
 							htmlFor="email"
@@ -14,12 +41,13 @@ const LoginForm = () => {
 						</label>
 						<div className="mt-2">
 							<input
+								disabled={isLoggingIn}
 								id="email"
 								name="email"
 								type="email"
 								required
 								autoComplete="email"
-								className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+								className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 disabled:cursor-not-allowed"
 							/>
 						</div>
 					</div>
@@ -43,12 +71,13 @@ const LoginForm = () => {
 						</div>
 						<div className="mt-2">
 							<input
+								disabled={isLoggingIn}
 								id="password"
 								name="password"
 								type="password"
 								required
 								autoComplete="current-password"
-								className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+								className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 disabled:cursor-not-allowed"
 							/>
 						</div>
 					</div>
@@ -56,7 +85,9 @@ const LoginForm = () => {
 					<div>
 						<button
 							type="submit"
-							className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+							className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-50 disabled:cursor-not-allowed"
+							onClick={onSubmit}
+							disabled={isLoggingIn}
 						>
 							Login
 						</button>

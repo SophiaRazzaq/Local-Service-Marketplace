@@ -2,13 +2,21 @@ import type React from "react";
 import { createContext, useContext, useEffect, useState } from "react";
 import { login, register, getProfile, setAuthToken } from "../services/api";
 import type { User } from "../types";
+import type { AxiosError } from "axios";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router";
 
 interface AuthContextType {
 	user: User | null;
 	token: string | null;
 	loading: boolean;
 	error: string | null;
-	login: (email: string, password: string) => Promise<void>;
+	login: (
+		email: string,
+		password: string,
+		onSuccess: () => void,
+		onError: (msg: string) => void,
+	) => Promise<void>;
 	register: (
 		name: string,
 		email: string,
@@ -48,7 +56,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 		initializeAuth();
 	}, []);
 
-	const handleLogin = async (email: string, password: string) => {
+	const handleLogin = async (
+		email: string,
+		password: string,
+		onSuccess: () => void,
+		onError: (msg: string) => void,
+	) => {
 		try {
 			setLoading(true);
 			const { token, user } = await login({ email, password });
@@ -57,8 +70,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 			setUser(user);
 			setToken(token);
 			setError(null);
-		} catch (err: any) {
-			setError(err.response?.data?.message || "Login failed");
+			onSuccess();
+		} catch (err: unknown) {
+			const error = err as AxiosError;
+			const errMessage = error.response?.data?.message || "Login failed";
+
+			setError(errMessage);
+			onError(errMessage);
 			throw err;
 		} finally {
 			setLoading(false);
