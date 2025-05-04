@@ -1,7 +1,8 @@
 {
 	"extends": "@tsconfig/node23",
 	"compilerOptions": {
-		"isolatedModules": true
+		"isolatedModules": true,
+		"types": ["./backend/express.d.ts"]
 	},
-	"include": ["backend", "rspack.config.ts"]
+	"include": ["backend"]
 }

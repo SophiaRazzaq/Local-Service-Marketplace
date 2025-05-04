@@ -3,7 +3,7 @@ import argon2 from "@node-rs/argon2";
 import { randomBytes } from "node:crypto";
 import config from "../infra/config";
 
-export interface IUser {
+export interface IUser extends mongoose.Document {
 	name: string;
 	email: string;
 	password: string;

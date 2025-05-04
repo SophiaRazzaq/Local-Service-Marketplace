@@ -1,13 +1,9 @@
-import mongoose, { type HydratedSingleSubdocument } from "mongoose";
-import type { IUser } from "./User";
+import mongoose from "mongoose";
 
-type Provider = Record<string, any>;
-type Service = Record<string, any>;
-
-export interface Booking {
+export interface IBooking extends mongoose.Document {
 	status: "pending" | "confirmed" | "cancelled" | "completed";
 	scheduledDate: Date;
-	scheduledTime: { start: string; end: string };
+	scheduledTime: { start: string; end?: string };
 	location: {
 		address: string;
 		city: string;
@@ -16,17 +12,17 @@ export interface Booking {
 	};
 	price: number;
 	paymentStatus: "paid" | "unpaid" | "refunded";
-	paymentMethod: string;
-	notes: string;
+	paymentMethod?: string;
+	notes?: string;
 	createdAt: Date;
 	updatedAt: Date;
 
-	customer: HydratedSingleSubdocument<IUser>;
-	service: Service;
-	provider: Provider;
+	customer: mongoose.Schema.Types.ObjectId;
+	service: mongoose.Schema.Types.ObjectId;
+	provider: mongoose.Schema.Types.ObjectId;
 }
 
-const BookingSchema = new mongoose.Schema<Booking>(
+const BookingSchema = new mongoose.Schema<IBooking>(
 	{
 		status: {
 			type: String,
@@ -75,6 +71,6 @@ const BookingSchema = new mongoose.Schema<Booking>(
 	{ timestamps: true },
 );
 
-const BookingModel = mongoose.model<Booking>("Booking", BookingSchema);
+const BookingModel = mongoose.model<IBooking>("Booking", BookingSchema);
 
 export default BookingModel;
