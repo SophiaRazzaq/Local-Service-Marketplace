@@ -6,6 +6,9 @@ import type { AxiosError } from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
 
+type OnSuccess = () => void;
+type OnError = (msg: string) => void;
+
 interface AuthContextType {
 	user: User | null;
 	token: string | null;
@@ -14,14 +17,16 @@ interface AuthContextType {
 	login: (
 		email: string,
 		password: string,
-		onSuccess: () => void,
-		onError: (msg: string) => void,
+		onSuccess: OnSuccess,
+		onError: OnError,
 	) => Promise<void>;
 	register: (
 		name: string,
 		email: string,
 		password: string,
 		role: string,
+		onSuccess: OnSuccess,
+		onError: OnError,
 	) => Promise<void>;
 	logout: () => void;
 }
@@ -59,8 +64,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 	const handleLogin = async (
 		email: string,
 		password: string,
-		onSuccess: () => void,
-		onError: (msg: string) => void,
+		onSuccess: OnSuccess,
+		onError: OnError,
 	) => {
 		try {
 			setLoading(true);
@@ -88,6 +93,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 		email: string,
 		password: string,
 		role: string,
+		onSuccess: OnSuccess,
+		onError: OnError,
 	) => {
 		try {
 			setLoading(true);
@@ -97,8 +104,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 			setUser(user);
 			setToken(token);
 			setError(null);
-		} catch (err: any) {
-			setError(err.response?.data?.message || "Registration failed");
+			onSuccess();
+		} catch (err: unknown) {
+			const error = err as AxiosError;
+			const errMessage = error.response?.data?.message || "Registration failed";
+
+			setError(errMessage);
+			onError(errMessage);
 			throw err;
 		} finally {
 			setLoading(false);
